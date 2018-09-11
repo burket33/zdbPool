@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+
+{% block title %}Game Results{% endblock %}
+
+{% block content %}
+<h3> Week {{ game_results.0.matchup.week }} </h3>
+<div class = "row">
+	<h4 class = "col-sm-1">Week</h4>
+	<ul class="pagination col-sm-11">
+		{% for week in weeks %}
+			{% if week == game_results.0.matchup.week %}
+				<li class="page-item active">
+					<a class="page-link" href="{% url 'zdbPool:weekly_game_results' week %}">{{week}}</a>
+				</li>
+			{% else %}
+				<li class="page-item">
+					<a class="page-link" href="{% url 'zdbPool:weekly_game_results' week %}">{{week}}</a>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+</div>
+<div class="table-responsive">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col"></th>
+				<th scope="col">Favorite</th>
+				<th scope="col">Score</th>
+				<th scope="col">Underdog</th>
+				<th scope="col">Score</th>
+				<th scope="col">Points For Pick</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for game in game_results %}
+				<tr class="table-active">
+					<th scope="row"></th>
+					<td>{{game.matchup.favorite.name}}</td>
+					<td>{{game.favorite_score}}</td>
+					<td>{{game.matchup.underdog.name}}</td>
+					<td>{{game.underdog_score}}</td>
+					<td>{{game.points_for_pick}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+<script>
+$('.table-active').on('click', function(event){
+	const tablecollection = $('.table-active')
+	alert("success")
+	console.log(event)
+	tablecollection.each(function(i){
+		console.log($(this))
+		if (this === event.currentTarget){
+			$(this).children().css("background-color", "red")
+		}
+
+	})
+});
+</script>
+{% endblock %}

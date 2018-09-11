@@ -1,0 +1,8 @@
+{% extends 'admin/change_form.html' %}
+{% load static %}
+
+{% block extrahead %}
+    {{ block.super }}
+
+    <script type="text/javascript" src="{% static  "js/admin_game_result.js" %}"></script>
+{% endblock %}

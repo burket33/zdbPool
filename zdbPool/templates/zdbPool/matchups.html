@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+
+{% block title %}Game of the Weeek{% endblock %}
+
+{% block content %}
+{% if blank_out or person_week_pick.started %}
+	<div class="alert alert-dismissible alert-info">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<p> Your pick has been locked for Week {{ matchups.0.week }}.</br>Your pick is {{ person_week_pick.matchup.favorite.name }} vs {{ person_week_pick.matchup.underdog.name }} </p>
+	</div>
+{% endif %}
+<h3> Week {{ matchups.0.week }} </h3>
+{% if person_week_pick %}
+	<div class="alert alert-dismissible alert-warning">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<h4 class="alert-heading"> Current pick is {{ person_week_pick.matchup.favorite.name }} vs {{ person_week_pick.matchup.underdog.name }}</h4>
+	</div>
+{% endif %}
+	<form action="{% url 'zdbPool:selection' %}" method= "POST">
+		<input type = "hidden" name ="pick_id" id ="pick_id" value ="{{person_week_pick.id}}"/>
+		<input type = "hidden" name ="matchup_id" id ="matchup_id" value ="{{matchups.0.id}}"/>
+		{% csrf_token %}
+		<fieldset>
+			<div class="row">
+				<div class="col-lg-2"></div>
+				<div class="col-lg-4">
+					<fieldset class="form-group">
+		      			<legend>Select Team</legend>
+		     			 <div class="custom-control custom-radio">
+		        			<input type="radio" class="custom-control-input" name="teamOptionsRadios" id="favoriteRadio" value="FAV_TEAM" checked="">
+		          			<label class="custom-control-label" for="favoriteRadio">
+		          				{{ matchups.0.favorite }} at -{{matchups.0.spread}}
+		        			</label>
+		      			</div>
+		      			<div class="custom-control custom-radio">
+		          			<input type="radio" class="custom-control-input" name="teamOptionsRadios" id="underdogRadio" value="UNDER_TEAM">
+		          			<label class="custom-control-label" for="underdogRadio">
+		          				{{ matchups.0.underdog }}
+		        			</label>
+		      			</div>
+		      		</fieldset>
+	      		</div>
+	      		<div class="col-lg-4">
+					<fieldset class="form-group">
+		      			<legend>Select Over or Under</legend>
+		     			 <div class="form-check">
+		        			<label class="form-check-label">
+		          				<input type="radio" class="form-check-input" name="overUnderOptionsRadios" id="overRadio" value="OVER" checked="">
+		          				Over {{matchups.0.overUnder}}
+		        			</label>
+		      			</div>
+		      			<div class="form-check">
+		      				<label class="form-check-label">
+		          				<input type="radio" class="form-check-input" name="overUnderOptionsRadios" id="underRadio" value="UNDER">
+		          				Under {{matchups.0.overUnder}}
+		        			</label>
+		      			</div>
+		      		</fieldset>
+	      		</div>
+	      	</div>
+      		{% if person_week_pick %}
+				<button type="submit" class="{% if person_week_pick.started or blank_out%}btn btn-primary disabled{% else %}btn btn-primary{% endif %}">Change Pick</button>
+			{% elif person_week_pick == None %}
+				<button type="submit" class="btn btn-primary">Submit Pick</button>
+			{% endif %}
+		</fieldset>
+	</form>
+
+{% endblock %}

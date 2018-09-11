@@ -1,0 +1,69 @@
+{% load static from staticfiles %}
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>{% block title %}{% endblock %}</title>
+		<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/superhero/bootstrap.min.css" rel="stylesheet" integrity="sha384-fiZOWGBt79dIbkt852eb24nKPxYOvAgtp4v4IUFozlwV/WkvlilK1oTVfPorZdV4" crossorigin="anonymous">
+		<link rel="alternate stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	</head>
+	<body class style>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container">
+				<a class="navbar-brand" href="{% url 'zdbPool:index' %}">Underdog Pool</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" style="">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarColor02">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'zdbPool:index' %}">Home <span class="sr-only">(current)</span></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'zdbPool:matchups' %}">Matchups</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'zdbPool:scoreboard' %}">Scoreboard</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'zdbPool:game_results' %}">Game Results</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav ml-auto">
+					{% if user.is_authenticated %}
+						<li class="nav-item"> 
+							<p class="nav-link disabled">Welcome {{user.first_name}}</p>
+						</li>
+						<li class="nav-item">
+							<a class="btn btn-secondary my-2 my-sm-0" href="{% url 'logout' %}">Log Out</a>
+						</li>
+					{% else %}
+						<a class="btn btn-secondary my-2 my-sm-0" href="{% url 'login' %}">Log In</a>
+					{% endif %}
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="container">
+			{% if messages %}
+				<div class="alert alert-dismissible alert-info">
+				{% for message in messages %}
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					<h6 class = "alert-heading">{{ message }}</h6>
+				{% endfor %}
+				</div>
+			{% endif %}
+			{% block content %}{% endblock %}
+			<footer>
+				© The Underdog Pool
+			</footer>
+		</div>
+	</body>
+</html>

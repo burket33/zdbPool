@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<h2>Sign Up</h2>
+<form method = "post">
+	<fieldset>
+		<div class="col-sm-5">
+			{% csrf_token %}
+			{% include 'zdbPool/signup_form.html' %}
+			<button class="btn btn-primary" type="submit"> Sign Up</button>
+		</div>
+	</fieldset>
+</form>
+{% endblock %}

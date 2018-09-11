@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}Underdog Pool{% endblock %}
+
+{% block content %}
+<div class="page-header">
+	<h1 id="containers">The Underdog Pool</h1>
+</div>
+<div class="jumbotron">
+	<div class="display-3">
+		<p class="lead">Welcome to The Underdog Pool 2018</p>
+	</div>
+		{% if not user.is_authenticated %}
+			<a class="btn btn-link" href="{% url 'login' %}">Log In</a>
+		{% endif %}
+</div>
+
+
+{% endblock %}
