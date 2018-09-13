@@ -21,7 +21,7 @@ def index(request):
 @login_required	
 def matchups(request):
 	matchups = Matchup.objects.order_by('-week')
-	dt = timezone.timedelta(days = -5) # simply used for debugging can remove when pushing out
+	dt = timezone.timedelta(days = 0) # simply used for debugging can remove when pushing out
 	time_now = timezone.now() + dt
 	if request.user.is_authenticated:
 		user = request.user
@@ -51,6 +51,12 @@ def selection(request):
 		return HttpResponseRedirect(reverse('zdbPool:matchups'))
 	else:
 		person = request.user
+		# delete after this week
+		if request.POST["teamOptionsRadios"] == 'UNDER_TEAM':
+			selected_winner = 'Giants'
+		else:
+			selected_winner = 'Cowboys'
+
 		if request.POST['pick_id']:
 			cur_pick = Pick.objects.get(pk = request.POST['pick_id'])
 			created_at = cur_pick.created_at
@@ -62,7 +68,7 @@ def selection(request):
 				winner = request.POST["teamOptionsRadios"], overUnder = request.POST['overUnderOptionsRadios'])
 		pick.save()
 		# save a log of when each pick is made
-		messages.add_message(request, messages.SUCCESS, 'Selection was made for {}'.format(selected_matchup))
+		messages.add_message(request, messages.SUCCESS, 'You seriously picked the {} I thought you were an Eagles fan'.format(selected_winner))
 	
 	return HttpResponseRedirect(reverse('zdbPool:index'))
 
