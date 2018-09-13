@@ -43,15 +43,15 @@
 	      		<div class="col-lg-4">
 					<fieldset class="form-group">
 		      			<legend>Select Over or Under</legend>
-		     			 <div class="form-check">
-		        			<label class="form-check-label">
-		          				<input type="radio" class="form-check-input" name="overUnderOptionsRadios" id="overRadio" value="OVER" checked="">
+		     			 <div class="custom-control custom-radio">
+		          			<input type="radio" class="custom-control-input" name="overUnderOptionsRadios" id="overRadio" value="OVER" checked="">
+		          			<label class="custom-control-label" for="overRadio">
 		          				Over {{matchups.0.overUnder}}
 		        			</label>
 		      			</div>
-		      			<div class="form-check">
-		      				<label class="form-check-label">
-		          				<input type="radio" class="form-check-input" name="overUnderOptionsRadios" id="underRadio" value="UNDER">
+		      			<div class="custom-control custom-radio">
+		          			<input type="radio" class="custom-control-input" name="overUnderOptionsRadios" id="underRadio" value="UNDER">
+		          			<label class="custom-control-label" for="underRadio">
 		          				Under {{matchups.0.overUnder}}
 		        			</label>
 		      			</div>

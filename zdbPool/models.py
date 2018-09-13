@@ -55,17 +55,21 @@ class GameResult(models.Model):
 		result_display = str(self.matchup.favorite) + ' ' + str(self.favorite_score) + ' ' + str(self.matchup.underdog) + ' ' + str(self.underdog_score)
 		return result_display
 
-	def winner(self):
-		if self.favorite_score > self.underdog_score:
-			return self.matchup.favorite
+	def winner_against_spread(self):
+		if self.favorite_score - self.matchup.spread > self.underdog_score:
+			return 'FAV_TEAM'
+		elif self.favorite_score - self.matchup.spread < self.underdog_score:
+			return 'UNDER_TEAM'
 		else:
-			return self.matchup.underdog
+			return none
+
+	#winner_against_spread = property(get_winner_against_spread)
 
 	def overUnderResult(self):
 		totalScore = self.favorite_score + self.underdog_score
 		if totalScore > self.matchup.overUnder:
-			return "OVER"
+			return 'OVER'
 		elif totalScore < self.matchup.overUnder:
-			return "UNDER"
+			return 'UNDER'
 		else:
 			return null
