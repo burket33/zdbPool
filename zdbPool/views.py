@@ -68,7 +68,7 @@ def selection(request):
 				winner = request.POST["teamOptionsRadios"], overUnder = request.POST['overUnderOptionsRadios'])
 		pick.save()
 		# save a log of when each pick is made
-		messages.add_message(request, messages.SUCCESS, 'You seriously picked the {} I thought you were an Eagles fan'.format(selected_winner))
+		messages.add_message(request, messages.SUCCESS, 'You picked the {} '.format(selected_winner))
 	
 	return HttpResponseRedirect(reverse('zdbPool:index'))
 
