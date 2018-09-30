@@ -51,11 +51,6 @@ def selection(request):
 		return HttpResponseRedirect(reverse('zdbPool:matchups'))
 	else:
 		person = request.user
-		# delete after this week
-		if request.POST["teamOptionsRadios"] == 'UNDER_TEAM':
-			selected_winner = 'Giants'
-		else:
-			selected_winner = 'Cowboys'
 
 		if request.POST['pick_id']:
 			cur_pick = Pick.objects.get(pk = request.POST['pick_id'])
@@ -68,7 +63,7 @@ def selection(request):
 				winner = request.POST["teamOptionsRadios"], overUnder = request.POST['overUnderOptionsRadios'])
 		pick.save()
 		# save a log of when each pick is made
-		messages.add_message(request, messages.SUCCESS, 'You picked the {} '.format(selected_winner))
+		messages.add_message(request, messages.SUCCESS, 'You picked the {} '.format(winner))
 	
 	return HttpResponseRedirect(reverse('zdbPool:index'))
 
